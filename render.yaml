@@ -1,0 +1,16 @@
+services:
+  # Flask ML API Service
+  - type: web
+    name: flickpick-ml-api
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    healthCheckPath: /health
+    healthCheckTimeout: 30
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: TMDB_API_KEY
+        sync: false  # Set this manually in Render dashboard
